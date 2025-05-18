@@ -1,0 +1,52 @@
+<div class="home-container">
+  <h2>Welcome, User!</h2> 
+  <div class="subscription-details">
+    <h3>Your Current Subscription</h3>
+
+    <!-- Use async pipe to unwrap the observable -->
+    <div *ngIf="currentSubscriptionDetails$ | async as details; else loadingOrNoSubscription">
+      <!-- Check if details are null (meaning no active subscription or an error occurred and we returned null) -->
+      <div *ngIf="details">
+          <p><strong>Plan:</strong> {{ details.plan.name }}</p>
+          <!-- Adjust property names based on your Plan and Subscription models -->
+          <p><strong>Data Allowance:</strong> {{ details.plan.dataAllowance }} MB</p> <!-- Or GB, make sure unit is clear -->
+          <!-- If speed is a plan property: -->
+          <!-- <p><strong>Speed:</strong> {{ details.plan.speed }}</p> -->
+          <p><strong>Status:</strong> {{ details.subscription.status }}</p>
+          <p><strong>Data Used:</strong> {{ details.subscription.dataUsed }} / {{ details.subscription.dataCap }} MB</p>
+          <!-- Add other relevant details -->
+      </div>
+       <div *ngIf="!details && !errorMessage">
+           <!-- This case handles "no active subscription found" -->
+           <p>You do not have an active subscription.</p>
+       </div>
+    </div>
+
+    <!-- Template for loading or when no subscription/error -->
+    <ng-template #loadingOrNoSubscription>
+         <div *ngIf="!errorMessage">
+           Loading subscription details...
+         </div>
+    </ng-template>
+
+
+    <!-- Display general errors -->
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <!-- Button to navigate to the available subscriptions page -->
+    <button routerLink="/plans">View Available Plans</button>
+    <!-- Changed routerLink to /plans - assuming you'll have a route for available plans -->
+  </div>
+
+  <!-- Optional: Add a logout button -->
+  <div class="logout-section">
+      <!-- Assuming logout() method exists in the component -->
+      <button (click)="logout()">Log Out</button>
+  </div>
+
+</div>

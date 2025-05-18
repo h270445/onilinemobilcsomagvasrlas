@@ -1,0 +1,23 @@
+<nav class="auth-navbar" *ngIf="currentUser$ | async as user">
+    <div class="navbar-brand">
+        <!-- Your app logo or name -->
+        <a routerLink="/">My Mobile Service</a>
+    </div>
+
+    <div class="navbar-links">
+        <!-- Link to view available subscriptions/plans -->
+        <a routerLink="/plans">Available Plans</a>
+
+        <!-- Link to edit profile (replace '/profile/edit' with your actual profile route) -->
+        <a routerLink="/profile/edit">Edit Profile</a>
+
+        <!-- Display user's email or name (optional) -->
+        <span class="user-display">Logged in as: {{ user.email }}</span>
+        <!-- You might store and access user.displayName or other profile data from your users collection -->
+    </div>
+
+    <div class="navbar-actions">
+        <!-- Sign Out Button -->
+        <button class="sign-out-button" (click)="onLogoutClick()">Sign Out</button>
+    </div>
+</nav>

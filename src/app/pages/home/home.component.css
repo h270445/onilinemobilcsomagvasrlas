@@ -1,0 +1,105 @@
+/* Styles for the home container */
+.home-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 3px 3px 15px rgba(0,0,0,0.08);
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Heading style */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 15px;
+}
+
+/* Subscription details section */
+.subscription-details {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border: 1px solid #dcdcdc;
+}
+
+.subscription-details h3 {
+    margin-top: 0;
+    color: #007bff;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.subscription-details p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.subscription-details strong {
+    color: #333;
+}
+
+/* Actions section (button) */
+.actions {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.actions button {
+    padding: 12px 25px;
+    background-color: #28a745; /* Green for view subscriptions */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.actions button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.actions button:active {
+     transform: translateY(0);
+}
+
+
+/* Error message style */
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Logout button section */
+.logout-section {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed #e0e0e0;
+}
+
+.logout-section button {
+    padding: 8px 15px;
+    background-color: #dc3545; /* Red for logout */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-section button:hover {
+    background-color: #c82333;
+}

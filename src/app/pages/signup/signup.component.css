@@ -1,0 +1,93 @@
+/* Styles for the signup container */
+.signup-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+    font-family: sans-serif;
+}
+
+/* Style for the main heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style for each form group (label + input) */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Style for labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Style for input fields */
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Makes padding and border included in the element's total width */
+}
+
+/* Style for the submit button */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745; /* Green color for signup */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Style for disabled button state */
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Hover effect for button (when not disabled) */
+button:hover:not(:disabled) {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Style for the link to the login page */
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Style for displaying error messages below inputs or generally */
+.error-message {
+    color: #dc3545; /* Red color for errors */
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Style for the main signup error message block */
+.signup-error {
+    margin-top: 15px;
+    text-align: center;
+}
