@@ -28,7 +28,7 @@ interface CurrentSubscriptionDetails {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent /*implements OnInit*/ {
   private subscriptionService = inject(SubscriptionService);
   private planService = inject(PlanService);
   private authService = inject(AuthService); // Inject Auth Service
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   errorMessage: string | null = null;
 
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     // Get the user ID stream (assuming AuthService provides one)
     const userId$ = this.authService.getCurrentUserStream(); //to get the Observable
 
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
         return of(null); 
       })
     );
-  }
+  }*/
 
   // Assuming you have a logout method in your AuthService
   logout(): void {
