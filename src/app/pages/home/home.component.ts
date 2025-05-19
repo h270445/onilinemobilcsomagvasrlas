@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // Get the user ID stream (assuming AuthService provides one)
-    const userId$ = this.authService.getCurrentUserStream; // Example: assuming a stream of user IDs
+    const userId$ = this.authService.getCurrentUserStream(); //to get the Observable
 
     this.currentSubscriptionDetails$ = userId$.pipe(
       switchMap(userId => {
@@ -49,6 +49,8 @@ export class HomeComponent implements OnInit {
           this.errorMessage = "Please log in.";
           return of(null); // Return null or empty observable
         }
+        // Clear previous error message if user is logged in
+        this.errorMessage = null;
         // Get the user's active subscription(s).
         // Our service is set up to return an array,
         // let's assume we only care about the first active one for the home page.
@@ -64,7 +66,7 @@ export class HomeComponent implements OnInit {
              }
 
              // Now fetch the plan details using the planId from the active subscription
-             const plan$ = this.planService.getPlan(activeSubscription.planId); // Returns Observable<Plan | undefined>
+             const plan$ = this.planService.getPlanById(activeSubscription.planId); // Returns Observable<Plan | undefined>
 
              // Combine the subscription and plan data
              return plan$.pipe(

@@ -63,8 +63,8 @@ export class SubscriptionService {
                           endDate: (data['endDate'] as any)?.toDate ? (data['endDate'] as any).toDate() : null, // Safely convert Timestamp
                           planId: data['planId'],
                           status: data['status'],
-                          dataCap: data['dataCap']
-                          // ... map other fields from your Firestore document to your Subscription model
+                          dataCap: data['dataCap'],
+                          dataUsed: data['dataUsed']
                       } as Subscription; // Cast to your Subscription type
                   });
               })

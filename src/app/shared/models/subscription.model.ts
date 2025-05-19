@@ -7,4 +7,5 @@ export interface Subscription {
   endDate: Timestamp;
   status: 'active' | 'cancelled' | 'expired' | 'trialing'; // Example statuses
   dataCap: number;
+  dataUsed: number;
 }
