@@ -14,9 +14,9 @@ import { RouterModule } from '@angular/router';
 interface CurrentSubscriptionDetails {
   subscription: Subscription;
   plan: Plan;
-  // Add any other derived data, like data usage percentage
   dataUsagePercentage?: number;
 }
+
 
 @Component({
   selector: 'app-home',

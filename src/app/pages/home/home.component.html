@@ -13,8 +13,6 @@
           <!-- If speed is a plan property: -->
           <!-- <p><strong>Speed:</strong> {{ details.plan.speed }}</p> -->
           <p><strong>Status:</strong> {{ details.subscription.status }}</p>
-          <p><strong>Data Used:</strong> {{ details.subscription.dataUsed }} / {{ details.subscription.dataCap }} MB</p>
-          <!-- Add other relevant details -->
       </div>
        <div *ngIf="!details && !errorMessage">
            <!-- This case handles "no active subscription found" -->
