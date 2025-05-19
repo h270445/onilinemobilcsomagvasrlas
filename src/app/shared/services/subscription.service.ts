@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, query, where, DocumentData, QuerySnapshot, addDoc, doc, deleteDoc, CollectionReference } from 'firebase/firestore';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { Observable, of, switchMap } from 'rxjs';
@@ -13,14 +13,11 @@ import { collectionData } from '@angular/fire/firestore';
 })
 export class SubscriptionService {
 
-  private firestore: Firestore;
-  private auth: Auth;
+  private firestore: Firestore = inject(Firestore);
+  private auth: Auth = inject(Auth);
   private subscriptionsCollection: CollectionReference<DocumentData>;
 
-  constructor(firestore: Firestore, auth: Auth) {
-    this.firestore = firestore;
-    this.auth = auth;
-    // Set up a reference to the main subscriptions collection
+  constructor() {
     this.subscriptionsCollection = collection(this.firestore, 'subscriptions');
   }
 
@@ -43,20 +40,11 @@ export class SubscriptionService {
           const userSubscriptionsQuery = query(
             this.subscriptionsCollection,
             where('userId', '==', user.uid) // Assuming each subscription document has a 'userId' field
-            // You might also want to add ordering, e.g., orderBy('startDate', 'desc')
           );
 
-          // --- Use AngularFire's collectionData here! ---
-          // collectionData listens to the query and emits an array of the document data.
-          // We add { idField: 'id' } so that the document ID is included in the data
-          // object under the key 'id'.
           return collectionData(userSubscriptionsQuery, { idField: 'id' }).pipe(
-              // Now, map the raw data received from collectionData to your Subscription model
               map(firestoneDataArray => {
                   return firestoneDataArray.map(data => {
-                      // Use the 'id' field added by idField: 'id'
-                      // Access fields using bracket notation data['fieldName'] is safer if names aren't guaranteed
-                      // Add optional chaining (?.) and .toDate() for Timestamps
                       return {
                           id: data['id'],
                           startDate: (data['startDate'] as any)?.toDate ? (data['startDate'] as any).toDate() : null, // Safely convert Timestamp
@@ -65,7 +53,7 @@ export class SubscriptionService {
                           status: data['status'],
                           dataCap: data['dataCap'],
                           dataUsed: data['dataUsed']
-                      } as Subscription; // Cast to your Subscription type
+                      } as Subscription;
                   });
               })
           );

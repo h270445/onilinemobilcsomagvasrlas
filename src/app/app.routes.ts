@@ -1,22 +1,26 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component'; // Import your component
-import { HomeComponent } from './pages/home/home.component'; // Import your home component (example)
+//import { LoginComponent } from './pages/login/login.component';
+//import { HomeComponent } from './pages/home/home.component';
+//import { ProfileComponent } from './pages/profile/profile.component';
+//import { SubsciptionsComponent } from './pages/subsciptions/subsciptions.component';
+//import { SignupComponent } from './pages/signup/signup.component'; // <-- Assuming you have a signup component
+
 import {
-    AuthGuard, 
+    AuthGuard,
     redirectLoggedInTo,
     redirectUnauthorizedTo
 } from '@angular/fire/auth-guard';
 
-const redirectLoggedInToHome = () => redirectLoggedInTo(['/']);
+
+const redirectLoggedInToHome = () => redirectLoggedInTo(['/home']);
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
+
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'home',
         pathMatch: 'full'
-    },
-    {
-        path: 'profile',
-        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
     },
     {
         path: 'login',
@@ -25,19 +29,34 @@ export const routes: Routes = [
         data: { authGuardPipe: redirectLoggedInToHome }
     },
     {
-        path: 'home', // The path users go to after login
-        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
-        canActivate: [AuthGuard]
+        path: 'signup',
+        loadComponent: () => import('./pages/signup/signup.component').then(m => m.SignupComponent), // <-- Update path and component name
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: redirectLoggedInToHome }
     },
     {
-        path: 'subscriptions', // The path for available subscriptions
-        loadComponent: () => import('./pages/subsciptions/subsciptions.component').then(m => m.SubsciptionsComponent),
-        canActivate: [AuthGuard]
+        path: 'home', // The path for the main app area
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
     },
-    { 
-        path: '', redirectTo: '/home', pathMatch: 'full' 
-    }
-    
-    
-
+    {
+        path: 'profile',
+        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+    },
+    {
+        path: 'subscriptions',
+        loadComponent: () => import('./pages/subsciptions/subsciptions.component').then(m => m.SubsciptionsComponent),
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+    },
+    {
+        path: 'plans',
+        loadComponent: () => import('./pages/plans/plans.component').then(m => m.PlansComponent),
+        canActivate: [AuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+    },
+    { path: '**', redirectTo: 'login' }
 ];

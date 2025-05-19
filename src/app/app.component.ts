@@ -1,18 +1,27 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
 import { AuthNavbarComponent } from './shared/components/auth-navbar/auth-navbar.component';
-import { FormsModule } from '@angular/forms';
+
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    imports: [
-      RouterOutlet,
-      AuthNavbarComponent
-    ],    
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    AuthNavbarComponent,
+  ],
+  template: `
+    <app-auth-navbar></app-auth-navbar>
+    <router-outlet></router-outlet>
+  `,
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'onlinemobilcsomagvasarlas';
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+
 }

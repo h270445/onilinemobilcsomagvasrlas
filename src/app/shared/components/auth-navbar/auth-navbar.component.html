@@ -1,7 +1,7 @@
 <nav class="auth-navbar" *ngIf="currentUser$ | async as user">
     <div class="navbar-brand">
         <!-- Your app logo or name -->
-        <a routerLink="/">My Mobile Service</a>
+        <a routerLink="/home">Voga Mobile Service</a>
     </div>
 
     <div class="navbar-links">
@@ -9,7 +9,7 @@
         <a routerLink="/plans">Available Plans</a>
 
         <!-- Link to edit profile (replace '/profile/edit' with your actual profile route) -->
-        <a routerLink="/profile/edit">Edit Profile</a>
+        <a routerLink="/profile">Edit Profile</a>
 
         <!-- Display user's email or name (optional) -->
         <span class="user-display">Logged in as: {{ user.email }}</span>
