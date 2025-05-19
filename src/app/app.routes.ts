@@ -1,20 +1,25 @@
-import { Routes } from '@angular/router';
-//import { LoginComponent } from './pages/login/login.component';
-//import { HomeComponent } from './pages/home/home.component';
-//import { ProfileComponent } from './pages/profile/profile.component';
-//import { SubsciptionsComponent } from './pages/subsciptions/subsciptions.component';
-//import { SignupComponent } from './pages/signup/signup.component'; // <-- Assuming you have a signup component
+// src/app/app.routes.ts
 
+import { Routes } from '@angular/router';
 import {
     AuthGuard,
     redirectLoggedInTo,
     redirectUnauthorizedTo
 } from '@angular/fire/auth-guard';
 
+// --- Import services needed by the home route ---
+import { SubscriptionService } from './shared/services/subscription.service';
+import { PlanService } from './shared/services/plan.service';
+import { AuthService } from './shared/services/auth/auth.service';
 
+// Remove imports for Firestore, Auth, provideFirebaseApp, initializeApp etc. if only used for route providers
+
+
+// --- Define our redirect pipes ---
 const redirectLoggedInToHome = () => redirectLoggedInTo(['/home']);
-
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
+
+// --- Define our Routes ---
 
 export const routes: Routes = [
     {
@@ -28,35 +33,43 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { authGuardPipe: redirectLoggedInToHome }
     },
+     // Assuming you have a signup page
     {
         path: 'signup',
-        loadComponent: () => import('./pages/signup/signup.component').then(m => m.SignupComponent), // <-- Update path and component name
+        loadComponent: () => import('./pages/signup/signup.component').then(m => m.SignupComponent),
         canActivate: [AuthGuard],
         data: { authGuardPipe: redirectLoggedInToHome }
     },
     {
-        path: 'home', // The path for the main app area
+        path: 'home', // The path users go to after login
         loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
         canActivate: [AuthGuard],
-        data: { authGuardPipe: redirectUnauthorizedToLogin }
+        data: { authGuardPipe: redirectUnauthorizedToLogin },
+        // --- Provide ONLY your custom services at the ROUTE LEVEL ---
+        // Rely on providedIn: 'root' and app.config.ts for Firebase services
+        providers: [
+          SubscriptionService,
+          PlanService,
+          AuthService
+          // Do NOT list Firestore or Auth here
+        ]
+        // ------------------------------------------------------
     },
     {
-        path: 'profile',
+        path: 'profile', // Protected profile page
         loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
         canActivate: [AuthGuard],
         data: { authGuardPipe: redirectUnauthorizedToLogin }
+        // Add providers here if specific to profile, but NOT Firestore/Auth if provided in root
+        // providers: [ /* Services specific to profile route */ ]
     },
     {
-        path: 'subscriptions',
+        path: 'subscriptions', // Protected subscriptions list page
         loadComponent: () => import('./pages/subsciptions/subsciptions.component').then(m => m.SubsciptionsComponent),
         canActivate: [AuthGuard],
         data: { authGuardPipe: redirectUnauthorizedToLogin }
+        // Add providers here if specific to subscriptions, but NOT Firestore/Auth if provided in root
+        // providers: [ /* Services specific to subscriptions route */ ]
     },
-    {
-        path: 'plans',
-        loadComponent: () => import('./pages/plans/plans.component').then(m => m.PlansComponent),
-        canActivate: [AuthGuard],
-        data: { authGuardPipe: redirectUnauthorizedToLogin }
-    },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'home' }
 ];
